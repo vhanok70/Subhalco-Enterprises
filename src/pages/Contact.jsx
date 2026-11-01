@@ -1,132 +1,231 @@
 
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Phone,
   Mail,
   MapPin,
-  MessageCircle
+  ArrowUpRight
 } from "lucide-react";
 
-const phone = "+917702310750";
-const email = "info@subhalco.com";
+const PHONE = "+917702310750";
+const ALT_PHONE = "+919390100750";
+const EMAIL = "info@subhalco.com";
+
+const ADDRESS =
+  "87/1108, Somsitty Nagar, Near Mother Land, Kurnool 518002, Andhra Pradesh, India";
+
+function Reveal({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.55 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Contact() {
-  function handleSubmit(event) {
+  const [form, setForm] = useState({
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    product: "",
+    quantity: "",
+    message: ""
+  });
+
+  function update(event) {
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value
+    });
+  }
+
+  function submit(event) {
     event.preventDefault();
 
-    const form = new FormData(event.currentTarget);
-    const name = form.get("name");
-    const company = form.get("company");
-    const product = form.get("product");
-    const quantity = form.get("quantity");
-    const message = form.get("message");
-
     const subject = encodeURIComponent(
-      `Business Enquiry - ${product}`
+      "Business Enquiry - Subhalco Enterprises"
     );
 
     const body = encodeURIComponent(
-      `Name: ${name}\nCompany: ${company}\nProduct: ${product}\nQuantity: ${quantity}\nMessage: ${message}`
+      `Name: ${form.name}
+Company: ${form.company}
+Email: ${form.email}
+Phone: ${form.phone}
+Product: ${form.product}
+Quantity: ${form.quantity}
+
+Message:
+${form.message}`
     );
 
     window.location.href =
-      `mailto:${email}?subject=${subject}&body=${body}`;
+      `mailto:${EMAIL}?subject=${subject}&body=${body}`;
   }
 
   return (
-    <main className="page">
-      <section className="inner-hero">
-        <p>GET IN TOUCH</p>
-        <h1>Let's Discuss Your Requirements</h1>
-        <p>
-          Contact Subhalco Enterprises for industrial metal
-          product enquiries and business discussions.
-        </p>
-      </section>
-
-      <section className="page-section contact-layout">
-        <div>
-          <h2>Contact Information</h2>
-
-          <div className="contact-card">
-            <Phone />
-            <div>
-              <h3>Phone</h3>
-              <a href={`tel:${phone}`}>+91 77023 10750</a>
-              <br />
-              <a href="tel:+919390100750">+91 93901 00750</a>
-            </div>
-          </div>
-
-          <div className="contact-card">
-            <Mail />
-            <div>
-              <h3>Email</h3>
-              <a href={`mailto:${email}`}>{email}</a>
-            </div>
-          </div>
-
-          <div className="contact-card">
-            <MapPin />
-            <div>
-              <h3>Business Address</h3>
-              <p>
-                87/1108, Somsitty Nagar,
-                Near Mother Land,
-                Kurnool – 518002,
-                Andhra Pradesh, India.
-              </p>
-            </div>
-          </div>
-
-          <a
-            className="primary-button"
-            href={`https://wa.me/${phone.replace("+", "")}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <MessageCircle size={18} />
-            WhatsApp Us
-          </a>
+    <main className="subhalco">
+      <section className="contact section">
+        <div className="section-kicker">
+          CONTACT SUBHALCO
         </div>
 
-        <div className="contact-form-card">
-          <h2>Send an Enquiry</h2>
+        <div className="contact-layout">
+          <Reveal>
+            <span className="eyebrow">
+              SALES & BUSINESS ENQUIRIES
+            </span>
 
-          <form onSubmit={handleSubmit}>
-            <label>Your Name</label>
-            <input name="name" required placeholder="Enter your name" />
+            <h2>
+              Let's discuss <em>business.</em>
+            </h2>
 
-            <label>Company Name</label>
-            <input name="company" placeholder="Enter company name" />
+            <p>
+              Contact Subhalco Enterprises for product enquiries,
+              purchase requirements and commercial discussions.
+            </p>
 
-            <label>Product Required</label>
-            <select name="product" required defaultValue="">
-              <option value="" disabled>Select a product</option>
-              <option>Aluminium Ingots A7</option>
-              <option>Aluminium Ingots ADC12</option>
-              <option>Aluminium Billets 6063</option>
-              <option>Copper Cathodes</option>
-              <option>Copper Millberry</option>
-              <option>Other Non-Ferrous Metals</option>
-            </select>
+            <a className="contact-row" href={`tel:${PHONE}`}>
+              <Phone />
+              <span>
+                <small>PHONE</small>
+                +91 77023 10750
+              </span>
+            </a>
 
-            <label>Required Quantity</label>
-            <input name="quantity" placeholder="Enter quantity" />
+            <a className="contact-row" href={`tel:${ALT_PHONE}`}>
+              <Phone />
+              <span>
+                <small>ALTERNATE PHONE</small>
+                +91 93901 00750
+              </span>
+            </a>
 
-            <label>Message</label>
-            <textarea
-              name="message"
-              rows="5"
-              placeholder="Describe your requirements"
-            />
+            <a className="contact-row" href={`mailto:${EMAIL}`}>
+              <Mail />
+              <span>
+                <small>EMAIL</small>
+                {EMAIL}
+              </span>
+            </a>
 
-            <button type="submit" className="primary-button">
-              Submit Enquiry
-            </button>
-          </form>
-          <p className="form-note">
-            Submitting opens your email application to send the enquiry.
-          </p>
+            <div className="contact-row">
+              <MapPin />
+              <span>
+                <small>OFFICE ADDRESS</small>
+                {ADDRESS}
+              </span>
+            </div>
+
+            <a
+              className="whatsapp-button"
+              href={`https://wa.me/${PHONE.replace("+", "")}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              CONTACT ON WHATSAPP
+              <ArrowUpRight size={16} />
+            </a>
+          </Reveal>
+
+          <Reveal>
+            <form
+              className="enquiry-form"
+              onSubmit={submit}
+            >
+              <h3>SUBMIT YOUR ENQUIRY</h3>
+
+              <p>
+                Share your requirement. We can follow up
+                using the contact details you provide.
+              </p>
+
+              <div className="form-pair">
+                <input
+                  name="name"
+                  placeholder="Your name *"
+                  value={form.name}
+                  onChange={update}
+                  required
+                />
+
+                <input
+                  name="company"
+                  placeholder="Company name"
+                  value={form.company}
+                  onChange={update}
+                />
+              </div>
+
+              <div className="form-pair">
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Email address *"
+                  value={form.email}
+                  onChange={update}
+                  required
+                />
+
+                <input
+                  name="phone"
+                  placeholder="Phone number"
+                  value={form.phone}
+                  onChange={update}
+                />
+              </div>
+
+              <select
+                name="product"
+                value={form.product}
+                onChange={update}
+                required
+              >
+                <option value="">Select product *</option>
+                <option>Aluminium Ingots A7</option>
+                <option>Aluminium Ingots ADC12</option>
+                <option>Aluminium Billets 6063</option>
+                <option>Copper Cathodes</option>
+                <option>Copper Millberry</option>
+                <option>Non-Ferrous Metals</option>
+                <option>Other</option>
+              </select>
+
+              <input
+                name="quantity"
+                placeholder="Quantity / MT"
+                value={form.quantity}
+                onChange={update}
+              />
+
+              <textarea
+                name="message"
+                rows="4"
+                placeholder="Your material requirement..."
+                value={form.message}
+                onChange={update}
+              />
+
+              <button
+                type="submit"
+                className="submit-button"
+              >
+                SEND ENQUIRY
+                <ArrowUpRight size={16} />
+              </button>
+
+              <small>
+                Submitting opens your email application to send
+                the enquiry to {EMAIL}.
+              </small>
+            </form>
+          </Reveal>
         </div>
       </section>
     </main>
