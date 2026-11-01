@@ -1,97 +1,66 @@
 
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Factory,
-  Car,
   Building2,
-  Zap,
-  Cog,
-  Recycle
+  Truck,
+  Layers,
+  Boxes,
+  ShieldCheck
 } from "lucide-react";
 
 const industries = [
-  {
-    icon: Factory,
-    title: "Metal Manufacturing",
-    description:
-      "Industrial metal processing, casting and manufacturing operations."
-  },
-  {
-    icon: Car,
-    title: "Automotive",
-    description:
-      "Metal components and materials used in automotive manufacturing."
-  },
-  {
-    icon: Building2,
-    title: "Construction",
-    description:
-      "Aluminium and other metals used in construction-related applications."
-  },
-  {
-    icon: Zap,
-    title: "Electrical",
-    description:
-      "Copper and aluminium materials used in electrical applications."
-  },
-  {
-    icon: Cog,
-    title: "Engineering",
-    description:
-      "Metal materials for engineering, machinery and industrial components."
-  },
-  {
-    icon: Recycle,
-    title: "Metal Recycling",
-    description:
-      "Secondary metal materials for recycling and recovery operations."
-  }
+  [Factory, "Foundries & casting"],
+  [Building2, "Metal manufacturing"],
+  [Truck, "Automotive"],
+  [Layers, "Extrusion & fabrication"],
+  [Boxes, "Metal processing"],
+  [ShieldCheck, "Engineering"]
 ];
+
+function Reveal({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.55 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Industries() {
   return (
-    <main className="page">
-      <section className="inner-hero">
-        <p>INDUSTRIES WE SERVE</p>
-        <h1>Supporting Industrial Sectors</h1>
-        <p>
-          Industrial materials for diverse manufacturing,
-          engineering and processing requirements.
-        </p>
-      </section>
-
-      <section className="page-section">
-        <h2>Industry Applications</h2>
-        <p>
-          Our product categories are relevant to a range of
-          industrial sectors, depending on material specifications
-          and application requirements.
-        </p>
-
-        <div className="page-grid">
-          {industries.map((industry) => {
-            const Icon = industry.icon;
-
-            return (
-              <article className="industry-card" key={industry.title}>
-                <Icon size={34} />
-                <h3>{industry.title}</h3>
-                <p>{industry.description}</p>
-              </article>
-            );
-          })}
+    <main className="subhalco">
+      <section className="industries section">
+        <div className="section-kicker">
+          INDUSTRIAL APPLICATIONS
         </div>
-      </section>
 
-      <section className="page-section">
-        <h2>Discuss Your Material Requirements</h2>
-        <p>
-          Contact us with your industry, material grade and
-          required specifications.
-        </p>
-        <Link to="/contact" className="primary-button">
-          Make an Enquiry
-        </Link>
+        <Reveal>
+          <span className="eyebrow">INDUSTRIES WE SERVE</span>
+
+          <h2>
+            Connected with <em>industry.</em>
+          </h2>
+
+          <p className="industry-intro">
+            Our product categories are relevant to a range of
+            industrial and manufacturing applications.
+          </p>
+        </Reveal>
+
+        <div className="industry-grid">
+          {industries.map(([Icon, name], index) => (
+            <div className="industry-item" key={name}>
+              <span>0{index + 1}</span>
+              <Icon size={27} />
+              <strong>{name}</strong>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   );
