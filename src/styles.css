@@ -248,3 +248,187 @@ button,input,select,textarea{font:inherit}
  html{scroll-behavior:auto}
  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+/* GLOBAL TYPOGRAPHY SIZE IMPROVEMENT */
+
+.topbar {
+  font-size: 12px;
+}
+
+.nav > a,
+.nav-dropdown > a {
+  font-size: 14px;
+}
+
+.header-button {
+  font-size: 12px;
+}
+
+.brand-name strong {
+  font-size: 20px;
+}
+
+.brand-name small {
+  font-size: 10px;
+}
+
+/* Main headings */
+.hero h1 {
+  font-size: clamp(48px, 5.8vw, 76px);
+}
+
+.about h2,
+.section-title-row h2,
+.industries h2,
+.why h2,
+.process h2,
+.contact h2 {
+  font-size: clamp(38px, 4.2vw, 54px);
+}
+
+/* Paragraphs */
+.hero-content p,
+.about p,
+.section-title-row > p,
+.industry-intro,
+.process-intro,
+.why-content > p,
+.contact-layout > div:first-child > p {
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* Highlight cards */
+.highlight h3 {
+  font-size: 15px;
+}
+
+.highlight p {
+  font-size: 13px;
+}
+
+/* Service cards */
+.service-card h3 {
+  font-size: 19px;
+}
+
+.service-card p {
+  font-size: 14px;
+}
+
+.service-card a {
+  font-size: 11px;
+}
+
+/* Product cards */
+.product-info h3 {
+  font-size: 20px;
+}
+
+.product-info p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.product-info small {
+  font-size: 11px;
+}
+
+.product-info a {
+  font-size: 11px;
+}
+
+/* Industry section */
+.industry-item strong {
+  font-size: 15px;
+}
+
+/* Why Subhalco */
+.advantage h3 {
+  font-size: 16px;
+}
+
+.advantage p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* Business process */
+.process-item h3 {
+  font-size: 18px;
+}
+
+.process-item p {
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Contact details */
+.contact-row span {
+  font-size: 14px;
+}
+
+.contact-row small {
+  font-size: 11px;
+}
+
+.enquiry-form input,
+.enquiry-form select,
+.enquiry-form textarea {
+  font-size: 14px;
+}
+
+.enquiry-form > p {
+  font-size: 13px;
+}
+
+/* Footer */
+.footer-column a,
+.footer-description {
+  font-size: 13px;
+}
+
+/* Mobile readability */
+@media (max-width: 680px) {
+  .nav > a,
+  .nav-dropdown > a {
+    font-size: 16px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .about h2,
+  .section-title-row h2,
+  .industries h2,
+  .why h2,
+  .process h2,
+  .contact h2 {
+    font-size: 35px;
+  }
+
+  .hero-content p,
+  .about p,
+  .section-title-row > p,
+  .industry-intro,
+  .process-intro,
+  .why-content > p {
+    font-size: 14px;
+  }
+
+  .service-card h3,
+  .product-info h3 {
+    font-size: 17px;
+  }
+
+  .service-card p,
+  .product-info p {
+    font-size: 13px;
+  }
+
+  .industry-item strong {
+    font-size: 13px;
+  }
+}
+
