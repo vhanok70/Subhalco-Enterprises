@@ -1,68 +1,106 @@
 
-import { Link, NavLink } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ArrowUpRight,
+  Phone,
+  Mail
+} from "lucide-react";
+
+const PHONE = "+917702310750";
+const EMAIL = "info@subhalco.com";
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menu, setMenu] = useState(false);
 
-  const closeMenu = () => setMenuOpen(false);
-
-  const navClass = ({ isActive }) =>
-    isActive ? "nav-link active" : "nav-link";
+  const closeMenu = () => setMenu(false);
 
   return (
-    <header className="site-header">
-      <div className="header-inner">
-        <Link to="/" className="brand" onClick={closeMenu}>
-          <span className="brand-mark">S</span>
-          <span>
+    <>
+      <div className="topbar">
+        <span>
+          INDUSTRIAL METALS & COMMODITIES · KURNOOL, INDIA
+        </span>
+
+        <div>
+          <a href={`tel:${PHONE}`}>
+            <Phone size={13} /> +91 77023 10750
+          </a>
+
+          <a href={`mailto:${EMAIL}`}>
+            <Mail size={13} /> {EMAIL}
+          </a>
+        </div>
+      </div>
+
+      <header className="header">
+        <Link className="brand" to="/" onClick={closeMenu}>
+          <span className="brand-icon">S</span>
+
+          <span className="brand-name">
             <strong>SUBHALCO</strong>
             <small>ENTERPRISES</small>
           </span>
         </Link>
 
         <button
-          className="mobile-menu-button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
+          className="mobile-menu"
+          onClick={() => setMenu(!menu)}
+          aria-label="Toggle menu"
         >
-          {menuOpen ? <X /> : <Menu />}
+          {menu ? <X /> : <Menu />}
         </button>
 
-        <nav className={menuOpen ? "main-nav open" : "main-nav"}>
-          <NavLink to="/" end className={navClass} onClick={closeMenu}>
+        <nav className={menu ? "nav nav-open" : "nav"}>
+          <NavLink to="/" end onClick={closeMenu}>
             Home
           </NavLink>
 
-          <NavLink to="/about" className={navClass} onClick={closeMenu}>
-            About Us
+          <NavLink to="/about" onClick={closeMenu}>
+            Company
           </NavLink>
 
           <div className="nav-dropdown">
-            <NavLink to="/products" className={navClass} onClick={closeMenu}>
-              Products <ChevronDown size={14} />
-            </NavLink>
-            <div className="dropdown-menu">
-              <Link to="/products" onClick={closeMenu}>Aluminium</Link>
-              <Link to="/products" onClick={closeMenu}>Copper</Link>
-              <Link to="/products" onClick={closeMenu}>Non-Ferrous Metals</Link>
+            <Link to="/products">
+              Products <ChevronDown size={13} />
+            </Link>
+
+            <div className="dropdown-panel">
+              <Link to="/products" onClick={closeMenu}>
+                Aluminium Ingots
+              </Link>
+              <Link to="/products" onClick={closeMenu}>
+                Aluminium Billets
+              </Link>
+              <Link to="/products" onClick={closeMenu}>
+                Copper Products
+              </Link>
+              <Link to="/products" onClick={closeMenu}>
+                Non-Ferrous Metals
+              </Link>
             </div>
           </div>
 
-          <NavLink to="/industries" className={navClass} onClick={closeMenu}>
+          <NavLink to="/industries" onClick={closeMenu}>
             Industries
           </NavLink>
 
-          <NavLink to="/quality" className={navClass} onClick={closeMenu}>
+          <NavLink to="/quality" onClick={closeMenu}>
             Quality
           </NavLink>
 
-          <NavLink to="/contact" className="nav-contact" onClick={closeMenu}>
-            Contact Us
+          <NavLink to="/contact" onClick={closeMenu}>
+            Contact
           </NavLink>
         </nav>
-      </div>
-    </header>
+
+        <Link className="header-button" to="/contact">
+          SALES ENQUIRY <ArrowUpRight size={15} />
+        </Link>
+      </header>
+    </>
   );
 }
