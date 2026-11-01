@@ -1,94 +1,156 @@
 
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
-  ClipboardCheck,
-  FileCheck,
-  Microscope,
-  ShieldCheck
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const qualityItems = [
-  {
-    icon: ClipboardCheck,
-    title: "Product Specifications",
-    description:
-      "Clear communication of material grade, composition, dimensions and other applicable specifications."
-  },
-  {
-    icon: Microscope,
-    title: "Material Verification",
-    description:
-      "Review of available material test reports and inspection information, where applicable."
-  },
-  {
-    icon: FileCheck,
-    title: "Documentation",
-    description:
-      "Attention to relevant commercial documents and supporting material records."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Business Transparency",
-    description:
-      "Clear communication about product details, availability, pricing and transaction requirements."
-  }
+const advantages = [
+  [
+    "01",
+    "Product-focused business",
+    "Attention to material grades, specifications and industrial applications."
+  ],
+  [
+    "02",
+    "Commercial clarity",
+    "Clear discussions around price, quantity, payment and delivery terms."
+  ],
+  [
+    "03",
+    "Business relationships",
+    "Professional engagement with suppliers, manufacturers and industrial buyers."
+  ],
+  [
+    "04",
+    "Order coordination",
+    "Communication and coordination throughout agreed business transactions."
+  ]
 ];
+
+const process = [
+  [
+    "01",
+    "Requirement",
+    "Understand the product, grade, quantity and delivery location."
+  ],
+  [
+    "02",
+    "Commercial discussion",
+    "Agree on pricing, payment terms and order conditions."
+  ],
+  [
+    "03",
+    "Documentation",
+    "Confirm relevant commercial and material documentation."
+  ],
+  [
+    "04",
+    "Order coordination",
+    "Coordinate dispatch and delivery as agreed."
+  ]
+];
+
+function Reveal({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.55 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Quality() {
   return (
-    <main className="page">
-      <section className="inner-hero">
-        <p>QUALITY & STANDARDS</p>
-        <h1>Clarity in Every Specification</h1>
-        <p>
-          A structured approach to material information,
-          verification and commercial documentation.
-        </p>
+    <main className="subhalco">
+
+      <section className="why section">
+        <div className="why-image">
+          <img
+            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200"
+            alt="Industrial manufacturing"
+          />
+        </div>
+
+        <div className="why-content">
+          <span className="eyebrow">WHY SUBHALCO</span>
+
+          <h2>
+            Professional business.
+            <br />
+            <em>Clear commitments.</em>
+          </h2>
+
+          <p>
+            We focus on the essential details of industrial
+            material transactions, from product requirements
+            to agreed commercial and delivery terms.
+          </p>
+
+          {advantages.map(([number, title, description]) => (
+            <div className="advantage" key={number}>
+              <span>{number}</span>
+
+              <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </div>
+
+              <CheckCircle2 size={19} />
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="page-section">
-        <h2>Our Quality Approach</h2>
-        <p>
-          We believe that clear product information and
-          appropriate documentation are important for
-          professional industrial metal transactions.
-        </p>
+      <section className="process section">
+        <div className="section-kicker">BUSINESS PROCESS</div>
 
-        <div className="page-grid">
-          {qualityItems.map((item) => {
-            const Icon = item.icon;
+        <Reveal>
+          <span className="eyebrow">
+            HOW WE CONDUCT BUSINESS
+          </span>
 
-            return (
-              <article className="quality-card" key={item.title}>
-                <Icon size={34} />
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </article>
-            );
-          })}
+          <h2>
+            From requirement <em>to delivery.</em>
+          </h2>
+
+          <p className="process-intro">
+            Each order is handled according to its agreed
+            specifications and commercial terms.
+          </p>
+        </Reveal>
+
+        <div className="process-grid">
+          {process.map(([number, title, description]) => (
+            <div className="process-item" key={number}>
+              <span>{number}</span>
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="page-section">
-        <h2>Material Information</h2>
+        <ShieldCheck size={38} />
+        <h2>Clear business communication</h2>
         <p>
-          Product grades, specifications, inspection reports
-          and supporting documents are subject to the
-          particular material and transaction.
+          Product specifications, inspection information
+          and supporting documentation are considered
+          according to the requirements of each transaction.
         </p>
-        <Link to="/products">Explore Our Products →</Link>
-      </section>
 
-      <section className="page-section">
-        <h2>Have a Product Requirement?</h2>
-        <p>
-          Contact us to discuss specifications and
-          documentation requirements.
-        </p>
-        <Link to="/contact" className="primary-button">
-          Contact Subhalco
+        <Link to="/contact" className="text-button">
+          DISCUSS YOUR REQUIREMENTS <ArrowRight size={16} />
         </Link>
       </section>
+
     </main>
   );
 }
