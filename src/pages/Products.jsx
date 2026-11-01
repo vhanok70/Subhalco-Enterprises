@@ -1,85 +1,90 @@
 
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const products = [
   {
-    category: "ALUMINIUM",
     name: "Aluminium Ingots",
-    grades: "A7 and ADC12",
-    description:
-      "Aluminium ingots for industrial applications, casting and manufacturing requirements."
+    grades: "A7 · ADC12",
+    image: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=900",
+    text: "Aluminium ingots for foundries, casting and industrial manufacturing."
   },
   {
-    category: "ALUMINIUM",
     name: "Aluminium Billets",
     grades: "6063",
-    description:
-      "Aluminium billets for extrusion and other industrial processing applications."
+    image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=900",
+    text: "Billet materials for extrusion and downstream industrial applications."
   },
   {
-    category: "COPPER",
-    name: "Copper Cathodes",
-    grades: "Copper cathode",
-    description:
-      "Copper cathode materials for industrial and metal processing requirements."
+    name: "Copper Products",
+    grades: "Cathodes · Millberry",
+    image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900",
+    text: "Copper materials for industrial processing and electrical applications."
   },
   {
-    category: "COPPER",
-    name: "Copper Millberry",
-    grades: "Copper scrap",
-    description:
-      "Copper scrap material for recycling and secondary metal processing."
-  },
-  {
-    category: "NON-FERROUS METALS",
-    name: "Other Metal Materials",
-    grades: "Subject to availability",
-    description:
-      "Additional non-ferrous metal materials based on specific business requirements."
+    name: "Non-Ferrous Metals",
+    grades: "Selected grades · Scrap",
+    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=900",
+    text: "Selected non-ferrous metal materials for commercial requirements."
   }
 ];
 
+function Reveal({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.55 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function Products() {
   return (
-    <main className="page">
-      <section className="inner-hero">
-        <p>OUR PRODUCT PORTFOLIO</p>
-        <h1>Industrial Metal Products</h1>
-        <p>
-          Exploring domestic business requirements across
-          aluminium, copper and non-ferrous metals.
-        </p>
-      </section>
+    <main className="subhalco">
+      <section className="products section">
+        <div className="section-kicker">OUR PRODUCT RANGE</div>
 
-      <section className="page-section">
-        <h2>Our Products</h2>
-        <p>
-          Explore our product categories and their relevant
-          industrial applications.
-        </p>
+        <Reveal>
+          <div className="section-title-row">
+            <div>
+              <span className="eyebrow">PRODUCT CATEGORIES</span>
+              <h2>Materials for <em>industry.</em></h2>
+            </div>
 
-        <div className="page-grid">
-          {products.map((product) => (
-            <article className="product-card" key={product.name}>
-              <span>{product.category}</span>
-              <h3>{product.name}</h3>
-              <strong>{product.grades}</strong>
-              <p>{product.description}</p>
-              <Link to="/contact">Send an Enquiry →</Link>
-            </article>
+            <p>
+              Selected metal products and grades for commercial,
+              processing and manufacturing requirements.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="product-grid">
+          {products.map((product, index) => (
+            <Reveal key={product.name}>
+              <article className="product-card">
+                <div className="product-image">
+                  <img src={product.image} alt={product.name} />
+                  <span>0{index + 1}</span>
+                </div>
+
+                <div className="product-info">
+                  <small>{product.grades}</small>
+                  <h3>{product.name}</h3>
+                  <p>{product.text}</p>
+
+                  <Link to="/contact">
+                    SEND AN ENQUIRY <ArrowUpRight size={15} />
+                  </Link>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
-      </section>
-
-      <section className="page-section">
-        <h2>Looking for a Specific Material?</h2>
-        <p>
-          Contact our team with your required grade,
-          specification and quantity.
-        </p>
-        <Link to="/contact" className="primary-button">
-          Contact Us
-        </Link>
       </section>
     </main>
   );
