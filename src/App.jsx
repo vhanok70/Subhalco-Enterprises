@@ -2,65 +2,62 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowUpRight, Menu, X, Factory, Layers3,
-  Zap, Building2, Truck, Boxes, Mail, Phone,
-  MapPin, CheckCircle2, Globe2
+  Menu, X, ArrowUpRight, ArrowRight, Phone, Mail, MapPin,
+  Factory, ShieldCheck, Boxes, Truck, Globe2, CheckCircle2,
+  Building2, Package, FileCheck, Handshake, ChevronRight
 } from "lucide-react";
+
+const phone1 = "+917702310750";
+const phone2 = "+919390100750";
+const email = "info@subhalco.com";
+const address = "87/1108, Somsitty Nagar, Near Mother Land, Kurnool 518002, Andhra Pradesh, India";
 
 const products = [
   {
-    number: "01",
     name: "Aluminium Ingots",
     grades: "A7 / ADC12",
-    description: "Primary and secondary aluminium grades for casting and industrial applications.",
+    description: "Aluminium grades for foundries, die casting and industrial manufacturing.",
     image: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=900"
   },
   {
-    number: "02",
     name: "Aluminium Billets",
     grades: "6063",
-    description: "Aluminium billet products for extrusion and downstream manufacturing.",
+    description: "Aluminium billet materials for extrusion and fabrication applications.",
     image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=900"
   },
   {
-    number: "03",
     name: "Copper Products",
     grades: "Cathodes / Millberry",
     description: "Copper materials for industrial processing and electrical applications.",
     image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900"
   },
   {
-    number: "04",
     name: "Non-Ferrous Metals",
     grades: "Selected grades and scrap",
-    description: "A range of non-ferrous metal materials for commercial and industrial use.",
+    description: "Selected non-ferrous materials for commercial and industrial requirements.",
     image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=900"
   }
 ];
 
-const industries = [
-  [Factory, "Metal manufacturing"],
-  [Truck, "Automotive"],
-  [Zap, "Electrical"],
-  [Layers3, "Extrusion & fabrication"],
-  [Boxes, "Foundries & casting"],
-  [Building2, "Engineering"]
+const services = [
+  [Package, "Industrial Material Supply", "Commercial supply of selected metal products and materials."],
+  [Boxes, "Product Procurement", "Identification and procurement of materials against defined requirements."],
+  [ShieldCheck, "Quality & Inspection Coordination", "Coordination of specifications, test reports and inspection requirements."],
+  [Truck, "Logistics Coordination", "Coordination of transport and delivery arrangements for agreed orders."],
+  [FileCheck, "Trade Documentation", "Commercial documentation and transaction-related paperwork."],
+  [Handshake, "Business Partnerships", "Professional engagement with manufacturers, suppliers and industrial buyers."]
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55 }
-  }
+const fade = {
+  hidden: { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
 function Reveal({ children, className = "" }) {
   return (
     <motion.div
       className={className}
-      variants={fadeUp}
+      variants={fade}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.12 }}
@@ -72,199 +69,154 @@ function Reveal({ children, className = "" }) {
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [form, setForm] = useState({
-    name: "",
-    company: "",
-    email: "",
-    product: "",
-    quantity: "",
-    message: ""
+    name: "", company: "", email: "", phone: "",
+    product: "", quantity: "", message: ""
   });
 
-  const updateForm = (e) => {
+  const update = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
-  const sendEnquiry = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-
-    const subject = encodeURIComponent(
-      "Business Enquiry - Subhalco Enterprises"
-    );
-
+    const subject = encodeURIComponent("Business Enquiry - Subhalco Enterprises");
     const body = encodeURIComponent(
-      `Name: ${form.name}
-Company: ${form.company}
-Email: ${form.email}
-Product: ${form.product}
-Quantity: ${form.quantity}
-
-Message:
-${form.message}`
+      `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nPhone: ${form.phone}\nProduct: ${form.product}\nQuantity: ${form.quantity}\n\nMessage:\n${form.message}`
     );
-
-    // Replace this placeholder with your official company email.
-    window.location.href =
-      `mailto:YOUR-EMAIL@example.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   };
 
-  const navItems = [
-    ["Company", "#company"],
-    ["Products", "#products"],
-    ["Industries", "#industries"],
-    ["Business", "#business"]
+  const nav = [
+    ["Home", "#home"], ["About Us", "#about"],
+    ["Services", "#services"], ["Products", "#products"],
+    ["Contact", "#contact"]
   ];
 
   return (
-    <main className="website">
+    <main className="site">
+      <div className="topbar">
+        <span>INDUSTRIAL METALS & COMMODITIES</span>
+        <div>
+          <a href={`tel:${phone1}`}><Phone size={13}/> +91 77023 10750</a>
+          <a href={`mailto:${email}`}><Mail size={13}/> {email}</a>
+        </div>
+      </div>
 
-      <header className="navbar">
-        <a href="#home" className="logo">
-          <span className="logo-mark">S</span>
-          <span className="logo-type">
-            <strong>SUBHALCO</strong>
-            <small>ENTERPRISES</small>
-          </span>
+      <header className="header">
+        <a href="#home" className="brand">
+          <span className="brand-symbol">S</span>
+          <span><b>SUBHALCO</b><small>ENTERPRISES</small></span>
         </a>
-
-        <nav className={menuOpen ? "nav-links active" : "nav-links"}>
-          {navItems.map(([label, link]) => (
-            <a key={label} href={link} onClick={() => setMenuOpen(false)}>
-              {label}
-            </a>
+        <nav className={menuOpen ? "navigation open" : "navigation"}>
+          {nav.map(([name, link]) => (
+            <a key={name} href={link} onClick={() => setMenuOpen(false)}>{name}</a>
           ))}
-          <a className="mobile-contact" href="#contact">Contact</a>
         </nav>
-
-        <a href="#contact" className="nav-contact">
-          CONTACT US <ArrowUpRight size={15} />
-        </a>
-
-        <button
-          className="menu-button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
-        >
-          {menuOpen ? <X /> : <Menu />}
+        <a href="#contact" className="header-cta">GET IN TOUCH <ArrowUpRight size={16}/></a>
+        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X/> : <Menu/>}
         </button>
       </header>
 
       <section className="hero" id="home">
-        <div className="hero-inner">
+        <div className="hero-photo"/>
+        <div className="hero-shade"/>
+        <div className="hero-content">
           <Reveal>
-            <div className="hero-kicker">
-              <span></span> INDUSTRIAL MATERIALS & METALS
-            </div>
-
-            <h1>
-              Materials for
-              <br />
-              <span>modern industry.</span>
-            </h1>
-
-            <p className="hero-description">
-              Subhalco Enterprises is an India-based business
-              engaged in the commercial supply and sale of
-              industrial metals and non-ferrous materials.
-            </p>
-
-            <div className="hero-actions">
-              <a href="#products" className="button-dark">
-                VIEW OUR PRODUCTS <ArrowUpRight size={17} />
-              </a>
-              <a href="#company" className="button-text">
-                ABOUT THE COMPANY <ArrowUpRight size={16} />
-              </a>
-            </div>
-          </Reveal>
-
-          <div className="hero-image">
-            <img
-              src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1400"
-              alt="Industrial metal production"
-            />
-            <div className="image-caption">
-              <span>SUBHALCO ENTERPRISES</span>
-              <span>INDUSTRIAL METALS</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="hero-bottom">
-          <span>INDIA</span>
-          <span>INDUSTRIAL METALS & COMMODITIES</span>
-          <span>01 / 04</span>
-        </div>
-      </section>
-
-      <section className="company-section" id="company">
-        <div className="section-topline">
-          <span>01 — COMPANY OVERVIEW</span>
-          <span>ABOUT SUBHALCO</span>
-        </div>
-
-        <div className="company-grid">
-          <Reveal>
-            <h2>
-              An independent
-              <br />
-              <span>industrial enterprise.</span>
-            </h2>
-          </Reveal>
-
-          <Reveal>
-            <p className="company-lead">
-              Subhalco Enterprises operates in the industrial
-              metals and commodities sector, with a focus on
-              commercial buying and selling of metal materials.
-            </p>
-            <p className="company-copy">
-              Our business is centred on understanding material
-              grades, specifications, quantities and commercial
-              requirements. We aim to conduct business through
-              clear communication, professional documentation
-              and responsible commercial practices.
-            </p>
-            <a href="#business" className="inline-link">
-              OUR BUSINESS APPROACH <ArrowUpRight size={16} />
-            </a>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="products-section" id="products">
-        <div className="section-topline">
-          <span>02 — PRODUCT PORTFOLIO</span>
-          <span>INDUSTRIAL MATERIALS</span>
-        </div>
-
-        <Reveal className="products-heading">
-          <div>
-            <h2>Our product portfolio</h2>
+            <span className="hero-label">SUBHALCO ENTERPRISES · KURNOOL, INDIA</span>
+            <h1>Industrial metals.<br/><span>Business built on trust.</span></h1>
             <p>
-              Industrial metals and material categories for
-              commercial and manufacturing requirements.
+              A business engaged in the commercial buying and
+              selling of industrial metals and non-ferrous materials,
+              serving the requirements of India's industrial sector.
             </p>
-          </div>
-          <span className="portfolio-note">PRODUCT RANGE / 2026</span>
-        </Reveal>
+            <div className="hero-actions">
+              <a href="#products" className="btn-primary">EXPLORE OUR PRODUCTS <ArrowUpRight size={17}/></a>
+              <a href="#about" className="btn-outline">DISCOVER OUR COMPANY <ArrowRight size={16}/></a>
+            </div>
+          </Reveal>
+        </div>
+        <div className="hero-foot"><span>INDUSTRIAL MATERIALS & METALS</span><span>ANDHRA PRADESH · INDIA</span></div>
+      </section>
 
+      <section className="trust-strip">
+        <div><b>01</b><span>Industrial metals</span></div>
+        <div><b>02</b><span>Commercial supply</span></div>
+        <div><b>03</b><span>Domestic business</span></div>
+        <div><b>04</b><span>Business relationships</span></div>
+      </section>
+
+      <section className="section about" id="about">
+        <div className="section-label">01 / WHO WE ARE</div>
+        <div className="about-grid">
+          <Reveal>
+            <span className="eyebrow">ABOUT SUBHALCO ENTERPRISES</span>
+            <h2>A business focused on <em>industrial materials.</em></h2>
+          </Reveal>
+          <Reveal>
+            <p className="lead">
+              Subhalco Enterprises is an India-based industrial metals
+              and commodities business headquartered in Kurnool,
+              Andhra Pradesh.
+            </p>
+            <p>
+              Our business activities focus on the commercial purchase
+              and sale of selected metal products, including aluminium,
+              copper and other non-ferrous materials. We work with
+              product specifications, grades, quantities, commercial
+              terms and delivery requirements for each transaction.
+            </p>
+            <a className="text-link" href="#contact">CONNECT WITH SUBHALCO <ArrowUpRight size={16}/></a>
+          </Reveal>
+        </div>
+        <div className="about-banner">
+          <img src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=1400" alt="Industrial aluminium materials"/>
+          <div><span>OUR BUSINESS</span><h3>Materials that support<br/>industrial progress.</h3></div>
+        </div>
+      </section>
+
+      <section className="section services" id="services">
+        <div className="section-label">02 / WHAT WE DO</div>
+        <Reveal>
+          <div className="section-heading">
+            <div><span className="eyebrow">OUR BUSINESS SERVICES</span><h2>Our areas of <em>operation.</em></h2></div>
+            <p>Commercial activities and related services supporting industrial material requirements.</p>
+          </div>
+        </Reveal>
+        <div className="service-grid">
+          {services.map(([Icon, title, desc], i) => (
+            <Reveal key={title}>
+              <article className="service-card">
+                <span className="service-number">0{i+1}</span>
+                <Icon size={31} strokeWidth={1.5}/>
+                <h3>{title}</h3><p>{desc}</p>
+                <a href="#contact">ENQUIRE <ArrowUpRight size={15}/></a>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="section products" id="products">
+        <div className="section-label">03 / PRODUCT CATEGORIES</div>
+        <Reveal>
+          <div className="section-heading">
+            <div><span className="eyebrow">OUR PORTFOLIO</span><h2>Industrial metal <em>products.</em></h2></div>
+            <p>Product grades and availability are discussed and confirmed for each business requirement.</p>
+          </div>
+        </Reveal>
         <div className="product-grid">
-          {products.map((product) => (
-            <Reveal key={product.number}>
+          {products.map((p, i) => (
+            <Reveal key={p.name}>
               <article className="product-card">
-                <div className="product-image">
-                  <img src={product.image} alt={product.name} />
-                  <span className="product-number">{product.number}</span>
+                <div className="product-photo">
+                  <img src={p.image} alt={p.name}/>
+                  <span>0{i+1}</span>
                 </div>
-                <div className="product-details">
-                  <span className="product-grade">{product.grades}</span>
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                  <a href="#contact">
-                    PRODUCT ENQUIRY <ArrowUpRight size={16} />
-                  </a>
+                <div className="product-copy">
+                  <small>{p.grades}</small><h3>{p.name}</h3>
+                  <p>{p.description}</p>
+                  <a href="#contact">PRODUCT ENQUIRY <ArrowUpRight size={16}/></a>
                 </div>
               </article>
             </Reveal>
@@ -272,215 +224,83 @@ ${form.message}`
         </div>
       </section>
 
-      <section className="industries-section" id="industries">
-        <div className="section-topline">
-          <span>03 — INDUSTRY APPLICATIONS</span>
-          <span>SECTORS</span>
-        </div>
-
+      <section className="section sectors">
+        <div className="section-label">04 / INDUSTRIES</div>
         <Reveal>
-          <h2>
-            Serving industrial
-            <br />
-            <span>material requirements.</span>
-          </h2>
-          <p className="industries-intro">
-            Our product categories are relevant to a range of
-            industrial and manufacturing applications.
-          </p>
+          <span className="eyebrow">INDUSTRIES WE CATER TO</span>
+          <h2>Supporting a range of <em>industrial sectors.</em></h2>
         </Reveal>
-
-        <div className="industry-grid">
-          {industries.map(([Icon, name], index) => (
-            <Reveal key={name}>
-              <div className="industry-item">
-                <span>0{index + 1}</span>
-                <Icon size={25} strokeWidth={1.5} />
-                <h3>{name}</h3>
-                <ArrowUpRight className="industry-arrow" size={17} />
-              </div>
-            </Reveal>
+        <div className="sector-grid">
+          {[
+            [Factory,"Foundries & casting"],
+            [Building2,"Metal manufacturing"],
+            [Truck,"Automotive industry"],
+            [Boxes,"Metal processing"],
+            [Globe2,"Engineering & fabrication"],
+            [ShieldCheck,"Electrical applications"]
+          ].map(([Icon, name], i) => (
+            <div className="sector" key={name}><span>0{i+1}</span><Icon/><b>{name}</b><ChevronRight/></div>
           ))}
         </div>
       </section>
 
-      <section className="business-section" id="business">
-        <div className="section-topline">
-          <span>04 — BUSINESS OPERATIONS</span>
-          <span>OUR APPROACH</span>
-        </div>
-
-        <div className="business-grid">
+      <section className="recognition">
+        <div className="recognition-inner">
           <Reveal>
-            <h2>
-              Commercial business.
-              <br />
-              <span>Clear execution.</span>
-            </h2>
+            <span className="eyebrow">OUR BUSINESS COMMITMENT</span>
+            <h2>Professional conduct.<br/><em>Transparent transactions.</em></h2>
             <p>
-              We approach each transaction with attention to
-              product specifications, commercial terms and
-              agreed delivery requirements.
+              We place importance on clear product specifications,
+              agreed commercial terms, appropriate documentation
+              and communication throughout each transaction.
             </p>
+            <a href="#contact" className="btn-primary">DISCUSS A REQUIREMENT <ArrowUpRight size={16}/></a>
           </Reveal>
-
-          <div className="business-list">
+          <div className="commitment-list">
             {[
-              ["01", "Product selection", "Material grades and specifications."],
-              ["02", "Commercial terms", "Pricing, quantity and payment conditions."],
-              ["03", "Documentation", "Relevant commercial and material documents."],
-              ["04", "Order fulfilment", "Delivery arrangements as agreed for each order."]
-            ].map(([number, title, description]) => (
-              <Reveal key={number}>
-                <div className="business-row">
-                  <span>{number}</span>
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
-                  </div>
-                  <CheckCircle2 size={19} />
-                </div>
-              </Reveal>
-            ))}
+              "Clear product and grade details",
+              "Defined commercial terms",
+              "Relevant transaction documentation",
+              "Coordinated delivery arrangements"
+            ].map((item) => <div key={item}><CheckCircle2/><span>{item}</span></div>)}
           </div>
         </div>
       </section>
 
-      <section className="principles-section">
-        <div className="section-topline">
-          <span>05 — BUSINESS PRINCIPLES</span>
-          <span>HOW WE OPERATE</span>
-        </div>
-
-        <Reveal>
-          <h2>Built around sound business practices.</h2>
-        </Reveal>
-
-        <div className="principles-grid">
-          {[
-            [CheckCircle2, "Commercial clarity", "Clear understanding of specifications and agreed terms."],
-            [Boxes, "Product knowledge", "Attention to grades, material details and applications."],
-            [Globe2, "Business relationships", "Professional engagement with industrial customers and suppliers."],
-            [Building2, "Responsible operations", "A practical approach to documentation and order requirements."]
-          ].map(([Icon, title, description]) => (
-            <Reveal key={title}>
-              <div className="principle-card">
-                <Icon size={25} strokeWidth={1.5} />
-                <h3>{title}</h3>
-                <p>{description}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className="contact-section" id="contact">
-        <div className="section-topline">
-          <span>06 — CONTACT</span>
-          <span>BUSINESS ENQUIRIES</span>
-        </div>
-
+      <section className="section contact" id="contact">
+        <div className="section-label">05 / CONTACT US</div>
         <div className="contact-grid">
           <Reveal>
-            <h2>
-              Let's discuss
-              <br />
-              <span>your requirement.</span>
-            </h2>
-            <p>
-              For product enquiries, commercial discussions
-              and business opportunities, contact Subhalco
-              Enterprises.
-            </p>
-
-            <div className="contact-detail">
-              <Mail size={19} />
-              <div>
-                <small>EMAIL</small>
-                <span>info@subhalco.com</span>
-              </div>
-            </div>
-
-            <div className="contact-detail">
-              <Phone size={19} />
-              <div>
-                <small>PHONE / WHATSAPP</small>
-                <span>+917702310750</span>
-              </div>
-            </div>
-
-            <div className="contact-detail">
-              <MapPin size={19} />
-              <div>
-                <small>BUSINESS LOCATION</small>
-                <span>India</span>
-              </div>
-            </div>
+            <span className="eyebrow">LET'S DO BUSINESS</span>
+            <h2>Connect with <em>Subhalco.</em></h2>
+            <p>For product enquiries, purchase requirements and business discussions, contact our office.</p>
+            <a className="contact-line" href={`tel:${phone1}`}><Phone/><span><small>PHONE / WHATSAPP</small>+91 77023 10750</span></a>
+            <a className="contact-line" href={`tel:${phone2}`}><Phone/><span><small>ALTERNATE NUMBER</small>+91 93901 00750</span></a>
+            <a className="contact-line" href={`mailto:${email}`}><Mail/><span><small>EMAIL</small>{email}</span></a>
+            <div className="contact-line"><MapPin/><span><small>OFFICE ADDRESS</small>{address}</span></div>
+            <a className="whatsapp" href={`https://wa.me/${phone1.replace("+","")}`} target="_blank" rel="noreferrer">CHAT ON WHATSAPP <ArrowUpRight size={16}/></a>
           </Reveal>
 
           <Reveal>
-            <form className="contact-form" onSubmit={sendEnquiry}>
-              <h3>SUBMIT A BUSINESS ENQUIRY</h3>
-
-              <div className="form-row">
-                <input
-                  name="name"
-                  placeholder="Your name"
-                  value={form.name}
-                  onChange={updateForm}
-                  required
-                />
-                <input
-                  name="company"
-                  placeholder="Company name"
-                  value={form.company}
-                  onChange={updateForm}
-                />
+            <form className="enquiry-form" onSubmit={submit}>
+              <h3>BUSINESS ENQUIRY</h3>
+              <div className="form-two">
+                <input name="name" placeholder="Your name *" value={form.name} onChange={update} required/>
+                <input name="company" placeholder="Company name" value={form.company} onChange={update}/>
               </div>
-
-              <input
-                type="email"
-                name="email"
-                placeholder="Business email"
-                value={form.email}
-                onChange={updateForm}
-                required
-              />
-
-              <select
-                name="product"
-                value={form.product}
-                onChange={updateForm}
-                required
-              >
-                <option value="">Select material</option>
-                {products.map((p) => (
-                  <option key={p.name} value={p.name}>{p.name}</option>
-                ))}
-                <option value="Other">Other</option>
+              <div className="form-two">
+                <input name="email" type="email" placeholder="Email address *" value={form.email} onChange={update} required/>
+                <input name="phone" placeholder="Phone number" value={form.phone} onChange={update}/>
+              </div>
+              <select name="product" value={form.product} onChange={update} required>
+                <option value="">Select product *</option>
+                {products.map(p=><option key={p.name}>{p.name}</option>)}
+                <option>Other</option>
               </select>
-
-              <input
-                name="quantity"
-                placeholder="Quantity / MT"
-                value={form.quantity}
-                onChange={updateForm}
-              />
-
-              <textarea
-                name="message"
-                placeholder="Material specifications and enquiry details"
-                value={form.message}
-                onChange={updateForm}
-                rows="4"
-              />
-
-              <button type="submit" className="button-dark">
-                SUBMIT ENQUIRY <ArrowUpRight size={17} />
-              </button>
-              <small className="form-note">
-                Official company email must be configured before enquiries can be received.
-              </small>
+              <input name="quantity" placeholder="Required quantity (MT)" value={form.quantity} onChange={update}/>
+              <textarea name="message" rows="4" placeholder="Tell us about your requirement..." value={form.message} onChange={update}/>
+              <button className="btn-primary" type="submit">SEND ENQUIRY <ArrowUpRight size={16}/></button>
+              <small>Submitting opens your email application to send the enquiry to Subhalco Enterprises.</small>
             </form>
           </Reveal>
         </div>
@@ -488,32 +308,15 @@ ${form.message}`
 
       <footer className="footer">
         <div className="footer-main">
-          <a href="#home" className="logo footer-logo">
-            <span className="logo-mark">S</span>
-            <span className="logo-type">
-              <strong>SUBHALCO</strong>
-              <small>ENTERPRISES</small>
-            </span>
-          </a>
-
-          <p>
-            Industrial metals and commodities.
-            <br />
-            Commercial business. Professional standards.
-          </p>
-
-          <a href="#home" className="back-top">
-            BACK TO TOP <ArrowUpRight size={15} />
-          </a>
+          <a href="#home" className="brand footer-brand"><span className="brand-symbol">S</span><span><b>SUBHALCO</b><small>ENTERPRISES</small></span></a>
+          <p>Industrial Metals & Commodities<br/>Kurnool, Andhra Pradesh, India</p>
+          <div className="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#products">Products</a><a href="#contact">Contact</a></div>
         </div>
-
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} SUBHALCO ENTERPRISES</span>
-          <span>INDIA</span>
-          <span>ALL RIGHTS RESERVED</span>
+          <span>© {new Date().getFullYear()} SUBHALCO ENTERPRISES. ALL RIGHTS RESERVED.</span>
+          <a href={`mailto:${email}`}>{email}</a>
         </div>
       </footer>
-
     </main>
   );
 }
